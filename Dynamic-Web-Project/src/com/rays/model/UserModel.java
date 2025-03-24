@@ -13,7 +13,7 @@ import com.rays.util.JDBCDataSource;
 
 public class UserModel {
 
-	//ResourceBundle rb = ResourceBundle.getBundle("com.rays.bundle.system");
+	// ResourceBundle rb = ResourceBundle.getBundle("com.rays.bundle.system");
 
 	public int nextPk() throws Exception {
 
@@ -104,10 +104,17 @@ public class UserModel {
 
 		Connection conn = JDBCDataSource.getConnection();
 
-		PreparedStatement pstmt = conn.prepareStatement("update user set firstName =? where id = ?");
+		PreparedStatement pstmt = conn.prepareStatement(
+				"update user set firstName = ?, lastName = ?, loginId = ?, password = ?, address = ?, gender = ?, dob = ? where Id = ?");
 
 		pstmt.setString(1, bean.getFirstName());
-		pstmt.setInt(2, bean.getId());
+		pstmt.setString(2, bean.getLastName());
+		pstmt.setString(3, bean.getLoginId());
+		pstmt.setString(4, bean.getPassword());
+		pstmt.setString(5, bean.getAddress());
+		pstmt.setString(6, bean.getGender());
+		pstmt.setDate(7, new java.sql.Date(bean.getDob().getTime()));
+		pstmt.setInt(8, bean.getId());
 
 		int i = pstmt.executeUpdate();
 

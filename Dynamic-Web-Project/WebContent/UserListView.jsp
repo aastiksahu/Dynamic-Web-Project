@@ -1,3 +1,5 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,7 +10,57 @@
 </head>
 <body>
 	<%@ include file="Header.jsp"%>
-	<h1>User List</h1>
+	<%
+		List list = (List) request.getAttribute("list");
+	%>
+	<h1 align="center">User List</h1>
+
+	<form action="UserListCtl.do" method="post">
+
+		<table width="100%" border="1px">
+
+			<tr style="background: skyblue">
+				<th>Check Box</th>
+				<th>Id</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Login Id</th>
+				<th>Gender</th>
+				<th>Address</th>
+				<th>DOB</th>
+				<th>Edit</th>
+			</tr>
+			
+			<%
+				Iterator it = list.iterator();
+				while (it.hasNext()) {
+					UserBean bean = (UserBean) it.next();
+			%>
+			
+			<tr align="center">
+				<td><input type="checkbox" name="ids" value="<%=bean.getId()%>"></td>
+				<td><%=bean.getId()%></td>
+				<td><%=bean.getFirstName()%></td>
+				<td><%=bean.getLastName()%></td>
+				<td><%=bean.getLoginId()%></td>
+				<td><%=bean.getGender()%></td>
+				<td><%=bean.getAddress()%></td>
+				<td><%=bean.getDob()%></td>
+				<td><a href="UserCtl.do?id=<%=bean.getId()%>">Edit</a></td>
+
+			</tr>
+			<%
+				}
+			%>
+
+		</table>
+		<table align="center">
+			<tr >
+				<th></th>
+				<td><input type="submit" name="operation" value="Delete"></td>
+			</tr>
+		</table>
+	</form>
 
 </body>
 </html>
